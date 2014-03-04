@@ -1,0 +1,56 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    
+    tools:context=".MainActivity" >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" 
+            android:background="@drawable/bg_card" >
+
+            <EditText
+                android:id="@+id/editTextAddTask"
+                android:background="@drawable/edit_text_design"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/add_task"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:inputType="textShortMessage"
+                android:maxLength="35" >
+
+                <requestFocus />
+            </EditText>
+
+            <ImageButton
+                android:id="@+id/addTaskButton"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:onClick="addTaskNow"
+                android:src="@drawable/ic_action_new"
+                android:background="@null" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <com.nhaarman.listviewanimations.widget.DynamicListView
+                android:id="@+id/activity_draganddrop_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+   				android:paddingLeft="@dimen/activity_horizontal_margin" 
+   				android:paddingRight="@dimen/activity_horizontal_margin" 
+   				android:paddingTop="2dp" 
+   				android:paddingBottom="4dp"
+   				android:layout_weight="1"
+   				android:footerDividersEnabled="false" >
+            </com.nhaarman.listviewanimations.widget.DynamicListView>
+
+        </TableRow>
+</TableLayout>
+
