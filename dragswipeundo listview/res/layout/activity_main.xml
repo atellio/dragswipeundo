@@ -1,15 +1,11 @@
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    
+  
     tools:context=".MainActivity" >
 
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" 
-            android:background="@drawable/bg_card" >
+    <LinearLayout >
 
             <EditText
                 android:id="@+id/editTextAddTask"
@@ -32,16 +28,11 @@
                 android:onClick="addTaskNow"
                 android:src="@drawable/ic_action_new"
                 android:background="@null" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+       </LinearLayout>
 
             <com.nhaarman.listviewanimations.widget.DynamicListView
                 android:id="@+id/activity_draganddrop_listview"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
    				android:paddingLeft="@dimen/activity_horizontal_margin" 
    				android:paddingRight="@dimen/activity_horizontal_margin" 
@@ -51,6 +42,6 @@
    				android:footerDividersEnabled="false" >
             </com.nhaarman.listviewanimations.widget.DynamicListView>
 
-        </TableRow>
-</TableLayout>
+    
+</LinearLayout>
 
