@@ -80,7 +80,7 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
     
 	private void setContextualUndoAdapter() {
     	undoAdapter = new ContextualUndoAdapter(adapter, 
-    			R.layout.undo_row, R.id.undo_row_undobutton, this);
+    			R.layout.undo_row, R.id.undo_row_undobutton, 3000, this);
     	undoAdapter.setAbsListView(getListView());
     	getListView().setAdapter(undoAdapter);
 	}
