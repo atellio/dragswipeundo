@@ -7,17 +7,21 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal" 
+        android:background="@drawable/header_shadow"
+        android:paddingTop="8.0dip"
+        android:paddingBottom="8.0dip"
+        >
 
         <EditText
             android:id="@+id/editTextAddTask"
             android:layout_width="0.0dip"
             android:layout_height="fill_parent"
             android:layout_weight="10.0"
-            android:background="@drawable/edit_text_design"
+            android:background="@android:color/transparent"
             android:hint="@string/add_task"
             android:inputType="textShortMessage"
-            android:paddingLeft="8.0dip"
+            android:paddingLeft="22.0dip"
             android:singleLine="true" >
 
             <requestFocus />
@@ -29,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="8.0dip"
-            android:layout_marginRight="8.0dip"
+            android:layout_marginRight="16.0dip"
             android:layout_weight="1.0"
             android:background="@null"
             android:onClick="addTaskNow"
@@ -41,10 +45,9 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1.0"
-        android:paddingBottom="4.0dip"
+        android:layout_marginTop="4dp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="2.0dip"
         android:scrollbars="none" />
 
 </LinearLayout>
