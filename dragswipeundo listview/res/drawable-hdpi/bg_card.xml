@@ -3,9 +3,8 @@
 	<item>
 		<shape android:shape="rectangle"
 			android:dither="true">
-
-			<corners android:radius="2dp"/>
-
+	
+				<corners android:radius="2dp"/>
 			<solid android:color="#ccc" />
 
 		</shape>
@@ -14,9 +13,8 @@
 	<item android:bottom="2dp">
 		<shape android:shape="rectangle"
 			android:dither="true">
-
-			<corners android:radius="2dp" />
-
+			
+				<corners android:radius="2dp" />
 			<solid android:color="@android:color/white" />
 
 			<padding android:bottom="12dp"
