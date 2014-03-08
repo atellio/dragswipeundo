@@ -56,6 +56,15 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
         listView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             	Log.d("Clicked item id", " "+ position);
+            	Log.d("Clicked item status", " " + items.get(position).getStatus());
+            	if(items.get(position).getStatus() == 0) {
+            			items.get(position).setStatus(1);
+            			db.updateTask(items.get(position));
+            		} else {
+            			items.get(position).setStatus(0);
+            			db.updateTask(items.get(position));
+            		}
+            	Log.d("item status after click", " " + items.get(position).getStatus());
             	
             }});
         
