@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="#F6F6F6">
+    
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -14,20 +16,18 @@
 
         <EditText
             android:id="@+id/editTextAddTask"
-            android:layout_width="0.0dip"
-            android:layout_height="fill_parent"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
             android:layout_weight="10.0"
             android:background="@android:color/transparent"
             android:hint="@string/add_task"
             android:inputType="textShortMessage"
-            android:paddingLeft="22.0dip"
-            android:shadowColor="#FF0000"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="1.5"
+            android:paddingLeft="22dip"
             android:singleLine="true"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" >
+            android:textColor="@android:color/primary_text_light"
+            android:textStyle="italic"
+            android:textColorHint="@android:color/secondary_text_light" 
+            android:textSize="18sp">
 
             <requestFocus />
         </EditText>
@@ -40,15 +40,15 @@
             android:layout_marginLeft="8.0dip"
             android:layout_marginRight="16.0dip"
             android:layout_weight="1.0"
-            android:background="@null"
+            android:background="?android:selectableItemBackground"
             android:onClick="addTaskNow"
             android:src="@drawable/ic_action_new" />
     </LinearLayout>
 
     <com.nhaarman.listviewanimations.widget.DynamicListView
         android:id="@+id/activity_draganddrop_listview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginTop="4dp"
         android:layout_weight="1.0"
         android:paddingLeft="@dimen/activity_horizontal_margin"
