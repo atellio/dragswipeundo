@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +28,7 @@ import com.nhaarman.listviewanimations.widget.DynamicListView;
 
 public class MainActivity extends Activity implements OnDismissCallback, DeleteItemCallback {
 
-	// implememts special ListView from listviewanimations library
+	// implememts special ListView from listviewanimations library to enable drag and drop functionality
     private DynamicListView listView;
     private EditText addTaskText;
     // for the task strings
@@ -51,6 +53,11 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
         items = db.getAllTasks();
         adapter = createListAdapter();
         
+        listView.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            	Log.d("Clicked item id", " "+ position);
+            	
+            }});
         
         setSwipeDismissAdapter();
         
@@ -63,6 +70,7 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
         listView.setAdapter(animAdapter);
         
         setContextualUndoAdapter();
+        
     }
     
     @Override
@@ -132,7 +140,7 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
         }
         
         // populate views of the listview with the textview defined in list_row.xml, 
-        // set the text of each textview to "this is row number" + whichever position the view occupies.
+        // set the text of each textview to contents of the EditText
         @Override
         public View getView(final int position, final View convertView,
                 final ViewGroup parent) {
@@ -148,6 +156,7 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
             return tv;
         }
     }
+   
 
 	@Override
 	public void onDismiss(AbsListView listView, int[] reverseSortedPositions) {
