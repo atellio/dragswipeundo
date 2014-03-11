@@ -55,7 +55,8 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
         
         listView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            	Log.d("Clicked item id", " "+ position);
+            	Log.d("Clicked item position", " "+ position);
+            	Log.d("Clicked item id", " "+ items.get(position).getId());
             	Log.d("Clicked item status", " " + items.get(position).getStatus());
             	if(items.get(position).getStatus() == 0) {
             			items.get(position).setStatus(1);
@@ -64,7 +65,6 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
             			items.get(position).setStatus(0);
             			db.updateTask(items.get(position));
             		}
-            	Log.d("item status after click", " " + items.get(position).getStatus());
             	
             }});
         
@@ -106,7 +106,8 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
     public void addTaskNow(View v) {
     	addTaskText = (EditText) findViewById(R.id.editTextAddTask);
 		String s = addTaskText.getText().toString();
-		Task task = new Task(s, 0);
+		// last argument is for the task's position in the list. how do I get this value????????????????????????????????????????????
+		Task task = new Task(s, 0, 0);
 		if (s.equalsIgnoreCase("")) {
 				noTextEnteredToast();
 			} else {
@@ -115,6 +116,7 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
 				Log.d("tasker", task.getTaskName() + " added");
 				addTaskText.setText("");
 				adapter.notifyDataSetChanged();
+				
 			}
       }
 
@@ -187,5 +189,15 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
 	 private AbsListView getListView() {
 			return listView;
 		}
+	 
+	/* @Override
+	 public void onStop() {
+		 // update rows on database.
+		 for (int i = 0; i < items.size(); i++) {
+			 
+			 
+		 }
+	 } 
+	 */
 
 }

@@ -26,6 +26,7 @@ private static final int DATABASE_VERSION = 1;
 	private static final String KEY_ID = "id";
 	private static final String KEY_TASKNAME= "taskName";
 	private static final String KEY_STATUS = "status";
+	private static final String KEY_POSITION = "position";
 	
 	
 	
@@ -38,7 +39,8 @@ private static final int DATABASE_VERSION = 1;
 		String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_TASKS + " ( "
 				+ KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
 				+ KEY_TASKNAME + " TEXT, "
-				+ KEY_STATUS + " INTEGER)";
+				+ KEY_STATUS + " INTEGER, "
+				+ KEY_POSITION + "INTEGER)";
 		db.execSQL(sql);
 
 	}
@@ -58,6 +60,8 @@ private static final int DATABASE_VERSION = 1;
 		values.put(KEY_TASKNAME, task.getTaskName());
 		// task status can be 0 for not done, 1 for done
 		values.put(KEY_STATUS, task.getStatus());
+		// position in listview
+		values.put(KEY_POSITION, task.getPosition());
 		
 		//inserting row
 		db.insert(TABLE_TASKS, null, values);
@@ -67,6 +71,8 @@ private static final int DATABASE_VERSION = 1;
 	public List<Task> getAllTasks() {
 		List<Task> taskList = new ArrayList<Task>();
 		// select all query
+		
+		// String selectQuery = "SELECT * FROM " + TABLE_TASKS + " ORDER BY KEY_POSITION ASC";   <---- change to this when you fix task.getPosition
 		String selectQuery = "SELECT * FROM " + TABLE_TASKS;
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(selectQuery, null);
@@ -91,6 +97,7 @@ private static final int DATABASE_VERSION = 1;
 		ContentValues values = new ContentValues();
 		values.put(KEY_TASKNAME, task.getTaskName());
 		values.put(KEY_STATUS, task.getStatus());
+		values.put(KEY_POSITION, task.getPosition());
 		db.update(TABLE_TASKS, values, KEY_ID + " = ?", 
 				new String[]{String.valueOf(task.getId())});
 	}
