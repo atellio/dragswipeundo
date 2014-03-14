@@ -79,14 +79,17 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
         listView.setAdapter(animAdapter);
         
         setContextualUndoAdapter();
-        
     }
     
     @Override
     protected void onPause() {
     	super.onPause();
+    		for (int i = 0; i < items.size(); i++) {
+    			items.get(i).setPosition(i);
+    			db.updateTask(items.get(i));
+    			Log.d("added " + items.get(i).getTaskName(), " to db with position: " + String.valueOf(items.get(i).getPosition()));
+		 }
     	undoAdapter.removePendingItem();
-    	
     }
     
     private void setSwipeDismissAdapter() {
@@ -106,8 +109,9 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
     public void addTaskNow(View v) {
     	addTaskText = (EditText) findViewById(R.id.editTextAddTask);
 		String s = addTaskText.getText().toString();
-		// last argument is for the task's position in the list. how do I get this value????????????????????????????????????????????
-		Task task = new Task(s, 0, 0);
+		// last argument is for the task's position in the list. how do I get this value )need to find position it will go into the list)?????????????????????????????????????????????
+		Task task = new Task(s, 0); // items.size() gives the int position that the new item will be in the list
+		Log.d("Created item position", " "+ String.valueOf(items.size()));
 		if (s.equalsIgnoreCase("")) {
 				noTextEnteredToast();
 			} else {
@@ -116,7 +120,6 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
 				Log.d("tasker", task.getTaskName() + " added");
 				addTaskText.setText("");
 				adapter.notifyDataSetChanged();
-				
 			}
       }
 
@@ -190,14 +193,7 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
 			return listView;
 		}
 	 
-	/* @Override
-	 public void onStop() {
-		 // update rows on database.
-		 for (int i = 0; i < items.size(); i++) {
-			 
-			 
-		 }
-	 } 
-	 */
+
+	 
 
 }

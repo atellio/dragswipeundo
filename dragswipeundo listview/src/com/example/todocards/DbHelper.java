@@ -40,7 +40,7 @@ private static final int DATABASE_VERSION = 1;
 				+ KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
 				+ KEY_TASKNAME + " TEXT, "
 				+ KEY_STATUS + " INTEGER, "
-				+ KEY_POSITION + "INTEGER)";
+				+ KEY_POSITION + " INTEGER)";
 		db.execSQL(sql);
 
 	}
@@ -72,8 +72,8 @@ private static final int DATABASE_VERSION = 1;
 		List<Task> taskList = new ArrayList<Task>();
 		// select all query
 		
-		// String selectQuery = "SELECT * FROM " + TABLE_TASKS + " ORDER BY KEY_POSITION ASC";   <---- change to this when you fix task.getPosition
-		String selectQuery = "SELECT * FROM " + TABLE_TASKS;
+		String selectQuery = "SELECT * FROM " + TABLE_TASKS + " ORDER BY POSITION ASC";   // <---- change to this when you fix task.getPosition
+		//String selectQuery = "SELECT * FROM " + TABLE_TASKS;
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(selectQuery, null);
 		//loop through all rows and adding to list
@@ -83,6 +83,7 @@ private static final int DATABASE_VERSION = 1;
 				task.setId(cursor.getInt(0));
 				task.setTaskName(cursor.getString(1));
 				task.setStatus(cursor.getInt(2));
+				task.setPosition(cursor.getInt(3));
 				// adding to list
 				taskList.add(task);
 				} while (cursor.moveToNext());
