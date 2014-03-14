@@ -13,6 +13,12 @@ public class Task {
 		this.status = 0;
 	}
 	
+	public Task(String taskName, int status) {
+		super();
+		this.taskName = taskName;
+		this.status = status;
+	}
+	
 	public Task(String taskName, int status, int position) {
 		super();
 		this.taskName = taskName;

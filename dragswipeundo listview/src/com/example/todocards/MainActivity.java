@@ -79,14 +79,17 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
         listView.setAdapter(animAdapter);
         
         setContextualUndoAdapter();
-        
     }
     
     @Override
     protected void onPause() {
     	super.onPause();
+    		for (int i = 0; i < items.size(); i++) {
+    			items.get(i).setPosition(i);
+    			db.updateTask(items.get(i)); // update the db with the current position of all items
+    			Log.d("added " + items.get(i).getTaskName(), " to db with position: " + String.valueOf(items.get(i).getPosition()));
+		 }
     	undoAdapter.removePendingItem();
-    	
     }
     
     private void setSwipeDismissAdapter() {
@@ -106,8 +109,8 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
     public void addTaskNow(View v) {
     	addTaskText = (EditText) findViewById(R.id.editTextAddTask);
 		String s = addTaskText.getText().toString();
-		// last argument is for the task's position in the list. how do I get this value????????????????????????????????????????????
-		Task task = new Task(s, 0, 0);
+		Task task = new Task(s, 0); 
+		Log.d("Created item position", " "+ String.valueOf(items.size()));
 		if (s.equalsIgnoreCase("")) {
 				noTextEnteredToast();
 			} else {
@@ -116,12 +119,11 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
 				Log.d("tasker", task.getTaskName() + " added");
 				addTaskText.setText("");
 				adapter.notifyDataSetChanged();
-				
 			}
       }
 
 	protected void noTextEnteredToast() {
-    	Toast.makeText(this, "enter the task description, idiot", Toast.LENGTH_LONG).show();
+    	Toast.makeText(this, "enter the task description, you beautiful creature", Toast.LENGTH_LONG).show();
 	}
 
 	// return a MyListAdapter object with MainActivity.java as the context (this)
@@ -190,14 +192,7 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
 			return listView;
 		}
 	 
-	/* @Override
-	 public void onStop() {
-		 // update rows on database.
-		 for (int i = 0; i < items.size(); i++) {
-			 
-			 
-		 }
-	 } 
-	 */
+
+	 
 
 }
