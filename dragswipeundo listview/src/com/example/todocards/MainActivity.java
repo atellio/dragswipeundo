@@ -86,7 +86,7 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
     	super.onPause();
     		for (int i = 0; i < items.size(); i++) {
     			items.get(i).setPosition(i);
-    			db.updateTask(items.get(i));
+    			db.updateTask(items.get(i)); // update the db with the current position of all items
     			Log.d("added " + items.get(i).getTaskName(), " to db with position: " + String.valueOf(items.get(i).getPosition()));
 		 }
     	undoAdapter.removePendingItem();
@@ -109,8 +109,7 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
     public void addTaskNow(View v) {
     	addTaskText = (EditText) findViewById(R.id.editTextAddTask);
 		String s = addTaskText.getText().toString();
-		// last argument is for the task's position in the list. how do I get this value )need to find position it will go into the list)?????????????????????????????????????????????
-		Task task = new Task(s, 0); // items.size() gives the int position that the new item will be in the list
+		Task task = new Task(s, 0); 
 		Log.d("Created item position", " "+ String.valueOf(items.size()));
 		if (s.equalsIgnoreCase("")) {
 				noTextEnteredToast();
@@ -124,7 +123,7 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
       }
 
 	protected void noTextEnteredToast() {
-    	Toast.makeText(this, "enter the task description, idiot", Toast.LENGTH_LONG).show();
+    	Toast.makeText(this, "enter the task description, you beautiful creature", Toast.LENGTH_LONG).show();
 	}
 
 	// return a MyListAdapter object with MainActivity.java as the context (this)
