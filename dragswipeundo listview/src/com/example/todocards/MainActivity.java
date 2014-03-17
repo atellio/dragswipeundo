@@ -28,6 +28,7 @@ import com.nhaarman.listviewanimations.widget.DynamicListView;
 
 public class MainActivity extends Activity implements OnDismissCallback, DeleteItemCallback {
 
+	private static final int DELETE_DELAY = 4000;
 	// implememts special ListView from listviewanimations library to enable drag and drop functionality
     private DynamicListView listView;
     private EditText addTaskText;
@@ -38,6 +39,8 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
     protected DbHelper db;
     private Task tempTaskHolder;
     private ContextualUndoAdapter undoAdapter;
+    private static final int TASK_UNCHECKED = 0;
+    private static final int TASK_CHECKED = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,7 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
         setContentView(R.layout.activity_main);
         //asign DynamicListView to the listView object
         listView = (DynamicListView) findViewById(R.id.activity_draganddrop_listview);
-        //setDivider(null) is set in the xml file so not sure why it's here as well
+        //setDivider(null) would this be better in the xml?
         listView.setDivider(null);
         
         // this ArrayList feeds the adapter that puts the strings into the dynamiclistview
@@ -53,20 +56,7 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
         items = db.getAllTasks();
         adapter = createListAdapter();
         
-        listView.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            	Log.d("Clicked item position", " "+ position);
-            	Log.d("Clicked item id", " "+ items.get(position).getId());
-            	Log.d("Clicked item status", " " + items.get(position).getStatus());
-            	if(items.get(position).getStatus() == 0) {
-            			items.get(position).setStatus(1);
-            			db.updateTask(items.get(position));
-            		} else {
-            			items.get(position).setStatus(0);
-            			db.updateTask(items.get(position));
-            		}
-            	
-            }});
+        setOnItemClickListener(); // only logs position of clicked item at the moment
         
         setSwipeDismissAdapter();
         
@@ -80,6 +70,24 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
         
         setContextualUndoAdapter();
     }
+
+	private void setOnItemClickListener() {
+		listView.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            	Log.d("Clicked item position", " "+ position);
+            	Log.d("Clicked item id", " "+ items.get(position).getId());
+            	Log.d("Clicked item status", " " + items.get(position).getStatus());
+            	if(items.get(position).getStatus() == TASK_UNCHECKED) {
+            			items.get(position).setStatus(TASK_CHECKED);
+            			db.updateTask(items.get(position));
+            			
+            		} else {
+            			items.get(position).setStatus(TASK_UNCHECKED);
+            			db.updateTask(items.get(position));
+            		}
+            	
+            }});
+	}
     
     @Override
     protected void onPause() {
@@ -100,7 +108,7 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
     
 	private void setContextualUndoAdapter() {
     	undoAdapter = new ContextualUndoAdapter(adapter, 
-    			R.layout.undo_row, R.id.undo_row_undobutton, 3000, this);
+    			R.layout.undo_row, R.id.undo_row_undobutton, DELETE_DELAY, this);
     	undoAdapter.setAbsListView(getListView());
     	getListView().setAdapter(undoAdapter);
 	}
@@ -109,7 +117,7 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
     public void addTaskNow(View v) {
     	addTaskText = (EditText) findViewById(R.id.editTextAddTask);
 		String s = addTaskText.getText().toString();
-		Task task = new Task(s, 0); 
+		Task task = new Task(s, TASK_UNCHECKED); 
 		Log.d("Created item position", " "+ String.valueOf(items.size()));
 		if (s.equalsIgnoreCase("")) {
 				noTextEnteredToast();
@@ -155,18 +163,20 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
         // populate views of the listview with the textview defined in list_row.xml, 
         // set the text of each textview to contents of the EditText
         @Override
-        public View getView(final int position, final View convertView,
+        public View getView(final int position, View convertView,
                 final ViewGroup parent) {
-            TextView tv = (TextView) convertView;
-            Task current = items.get(position);
-            if (tv == null) {
-                tv = (TextView) LayoutInflater.from(mContext).inflate(
-                        R.layout.list_row, parent, false);
+        	if(convertView == null){
+                LayoutInflater mLayoutInflater = LayoutInflater.from(mContext);
+                convertView = mLayoutInflater.inflate(R.layout.list_row, null);
             }
+        	
+            Task current = items.get(position);
             
-            tv.setText(current.getTaskName());
+            TextView descriptionView = (TextView) convertView.findViewById(R.id.task_description);
+            descriptionView.setText(current.getTaskName());
             // Log.d("here!", getItem(position));
-            return tv;
+            
+            return convertView;
         }
     }
    
