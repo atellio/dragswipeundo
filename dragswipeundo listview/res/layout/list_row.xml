@@ -2,19 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/custombackground"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal" >
+
+    <CheckBox
+        android:id="@+id/taskCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical" />
 
     <TextView
         android:id="@+id/task_description"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/bg_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
         android:paddingLeft="14dp"
         android:singleLine="true"
-        android:textAlignment="center"
-        android:textColor="@android:color/primary_text_light" />
-    
-   
+        android:textColor="@android:color/primary_text_light"
+        android:listSelector="@android:color/background_light" />
+
+    <ImageButton
+        android:id="@+id/editTaskName"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:background="?android:selectableItemBackground"
+        android:focusable="false"
+        android:src="@drawable/ic_action_edit" />
+
 </LinearLayout>

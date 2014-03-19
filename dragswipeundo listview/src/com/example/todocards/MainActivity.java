@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +30,8 @@ import com.nhaarman.listviewanimations.widget.DynamicListView;
 
 public class MainActivity extends Activity implements OnDismissCallback, DeleteItemCallback {
 
+	private static final int TASK_UNCHECKED = 0;
+	private static final int TASK_CHECKED = 1;
 	private static final int DELETE_DELAY = 4000;
 	// implememts special ListView from listviewanimations library to enable drag and drop functionality
     private DynamicListView listView;
@@ -39,8 +43,7 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
     protected DbHelper db;
     private Task tempTaskHolder;
     private ContextualUndoAdapter undoAdapter;
-    private static final int TASK_UNCHECKED = 0;
-    private static final int TASK_CHECKED = 1;
+ 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,7 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
         //asign DynamicListView to the listView object
         listView = (DynamicListView) findViewById(R.id.activity_draganddrop_listview);
         //setDivider(null) would this be better in the xml?
-        listView.setDivider(null);
+        // listView.setDivider(null);
         
         // this ArrayList feeds the adapter that puts the strings into the dynamiclistview
         db = new DbHelper(this);
@@ -74,16 +77,27 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
 	private void setOnItemClickListener() {
 		listView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            	
+            	TextView descriptionView = (TextView) view.findViewById(R.id.task_description);
+            	CheckBox checkBox = (CheckBox) view.findViewById(R.id.taskCheckBox);
+            	
             	Log.d("Clicked item position", " "+ position);
             	Log.d("Clicked item id", " "+ items.get(position).getId());
             	Log.d("Clicked item status", " " + items.get(position).getStatus());
-            	if(items.get(position).getStatus() == TASK_UNCHECKED) {
+            	
+            	Task clickedTask = items.get(position);
+            	
+            	if(clickedTask.getStatus() == TASK_UNCHECKED) {
             			items.get(position).setStatus(TASK_CHECKED);
             			db.updateTask(items.get(position));
-            			
+            			descriptionView.setPaintFlags(descriptionView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            			checkBox.setChecked(true);
             		} else {
             			items.get(position).setStatus(TASK_UNCHECKED);
             			db.updateTask(items.get(position));
+                        descriptionView.setPaintFlags(descriptionView.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                        checkBox.setChecked(false);
+
             		}
             	
             }});
@@ -160,8 +174,9 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
             return true;
         }
         
-        // populate views of the listview with the textview defined in list_row.xml, 
+     
         // set the text of each textview to contents of the EditText
+        // change to:  protected void onListItemClick(ListView l, View v, int position, long id)
         @Override
         public View getView(final int position, View convertView,
                 final ViewGroup parent) {
@@ -173,14 +188,22 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
             Task current = items.get(position);
             
             TextView descriptionView = (TextView) convertView.findViewById(R.id.task_description);
+            CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.taskCheckBox);
             descriptionView.setText(current.getTaskName());
             // Log.d("here!", getItem(position));
+            
+            if(current.getStatus() == TASK_CHECKED){
+                descriptionView.setPaintFlags(descriptionView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                checkBox.setChecked(true);
+            }else{
+                descriptionView.setPaintFlags(descriptionView.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                checkBox.setChecked(false);
+            }
             
             return convertView;
         }
     }
    
-
 	@Override
 	public void onDismiss(AbsListView listView, int[] reverseSortedPositions) {
 			for(int i : reverseSortedPositions) {

@@ -5,10 +5,18 @@
     android:background="#F6F6F6"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/header_shadow"
+        android:paddingLeft="22dip"
+        android:text="actionbar"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_card"
         android:orientation="horizontal"
         android:paddingBottom="8.0dip"
         android:paddingTop="8.0dip" >
@@ -21,7 +29,7 @@
             android:background="@android:color/transparent"
             android:hint="@string/add_task"
             android:inputType="textShortMessage"
-            android:paddingLeft="22dip"
+            android:paddingLeft="14dip"
             android:singleLine="true"
             android:textColor="@android:color/primary_text_light"
             android:textColorHint="@android:color/secondary_text_light"
@@ -36,8 +44,8 @@
             android:layout_width="0.0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="8.0dip"
-            android:layout_marginRight="16.0dip"
+            android:layout_marginLeft="12.0dip"
+            android:layout_marginRight="12.0dip"
             android:layout_weight="1.0"
             android:background="?android:selectableItemBackground"
             android:onClick="addTaskNow"
@@ -48,13 +56,14 @@
         android:id="@+id/activity_draganddrop_listview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingTop="4dp"
-        android:clipToPadding="false"
         android:layout_weight="1.0"
+        android:clipToPadding="false"
+        android:divider="#00000000"
+        android:dividerHeight="4dp"
         android:gravity="center_vertical"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:scrollbars="none" 
-        />
+        android:paddingTop="4dp"
+        android:scrollbars="none" />
 
 </LinearLayout>
