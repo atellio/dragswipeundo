@@ -5,9 +5,12 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -15,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,8 +76,17 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
         listView.setAdapter(animAdapter);
         
         setContextualUndoAdapter();
+        
+        // fix actionbar shadow bug
+        setWindowContentOverlayCompat();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+      getMenuInflater().inflate(R.menu.main, menu);
+      return true;
+    }
+   
 	private void setOnItemClickListener() {
 		listView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -226,6 +239,28 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
 		}
 	 
 
-	 
+	 private void setWindowContentOverlayCompat() {
+		    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR2) {
+		        // Get the content view
+		        View contentView = findViewById(android.R.id.content);
+
+		        // Make sure it's a valid instance of a FrameLayout
+		        if (contentView instanceof FrameLayout) {
+		            TypedValue tv = new TypedValue();
+
+		            // Get the windowContentOverlay value of the current theme
+		            if (getTheme().resolveAttribute(
+		                    android.R.attr.windowContentOverlay, tv, true)) {
+
+		                // If it's a valid resource, set it as the foreground drawable
+		                // for the content view
+		                if (tv.resourceId != 0) {
+		                    ((FrameLayout) contentView).setForeground(
+		                            getResources().getDrawable(tv.resourceId));
+		                }
+		            }
+		        }
+		    }
+		}
 
 }

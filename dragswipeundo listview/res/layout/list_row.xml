@@ -18,10 +18,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
+        android:listSelector="@android:color/background_light"
         android:paddingLeft="14dp"
         android:singleLine="true"
-        android:textColor="@android:color/primary_text_light"
-        android:listSelector="@android:color/background_light" />
+        android:textColor="@android:color/primary_text_light" />
 
     <ImageButton
         android:id="@+id/editTaskName"
