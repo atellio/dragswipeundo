@@ -12,6 +12,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -110,10 +111,10 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
             			db.updateTask(items.get(position));
                         descriptionView.setPaintFlags(descriptionView.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                         checkBox.setChecked(false);
-
             		}
             	
             }});
+
 	}
     
     @Override
@@ -198,10 +199,27 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
                 convertView = mLayoutInflater.inflate(R.layout.list_row, null);
             }
         	
-            Task current = items.get(position);
+            final Task current = items.get(position);
             
-            TextView descriptionView = (TextView) convertView.findViewById(R.id.task_description);
-            CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.taskCheckBox);
+            final TextView descriptionView = (TextView) convertView.findViewById(R.id.task_description);
+            final CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.taskCheckBox);
+            
+            // makes clicked status of checkbox save on view recycle and cross out text on checked
+            checkBox.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					if(checkBox.isChecked()) {
+						current.setStatus(TASK_CHECKED);
+						descriptionView.setPaintFlags(descriptionView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+					} else {
+						current.setStatus(TASK_UNCHECKED);
+						descriptionView.setPaintFlags(descriptionView.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+					}
+					
+				}
+            		
+            });
             descriptionView.setText(current.getTaskName());
             // Log.d("here!", getItem(position));
             

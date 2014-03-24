@@ -24,12 +24,12 @@
         android:textColor="@android:color/primary_text_light" />
 
     <ImageButton
-        android:id="@+id/editTaskName"
+        android:id="@+id/expandListView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:background="?android:selectableItemBackground"
         android:focusable="false"
-        android:src="@drawable/ic_action_edit" />
+        android:src="@drawable/ic_action_expand" />
 
 </LinearLayout>
