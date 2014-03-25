@@ -4,6 +4,6 @@
     </style>
 
     <style name="MyActionBarTheme" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">#A3CAAC</item>
+        <item name="android:background">#A1DBB2</item>
     </style>
 </resources>
