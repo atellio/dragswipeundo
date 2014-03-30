@@ -1,9 +1,10 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     <style name="MyCustomTheme" parent="@android:style/Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/MyActionBarTheme</item>
     </style>
 
     <style name="MyActionBarTheme" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:background">#A1DBB2</item>
+        <item name="android:icon">@drawable/ic_action_to_do_app_actionbar_icon</item>
     </style>
 </resources>
