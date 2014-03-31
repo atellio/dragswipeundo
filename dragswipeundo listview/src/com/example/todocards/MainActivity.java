@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -25,7 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.adriantosello.todolistforbabes.R;
+import com.clefface.todolistforbabes.R;
 import com.nhaarman.listviewanimations.ArrayAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.OnDismissCallback;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
@@ -60,6 +61,7 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
         listView = (DynamicListView) findViewById(R.id.activity_draganddrop_listview);
         //setDivider(null) would this be better in the xml?
         // listView.setDivider(null);
+        addTaskText = (EditText) findViewById(R.id.editTextAddTask);
         
         // this ArrayList feeds the adapter that puts the strings into the dynamiclistview
         db = new DbHelper(this);
@@ -146,7 +148,7 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
     
     // dont actually need a reference object for the add button, just used the xml onclick "addTaskNow"
     public void addTaskNow(View v) {
-    	addTaskText = (EditText) findViewById(R.id.editTextAddTask);
+    	
 		String s = addTaskText.getText().toString();
 		Task task = new Task(s, TASK_UNCHECKED); 
 		Log.d("Created item position", " "+ String.valueOf(items.size()));
@@ -163,12 +165,13 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
 
     // !!!!!!!!!!!!!!!!!!!!!!!!! BROKEN !!!!!!!!!!!!!!!!!!!!!!!!!! DOESN'T WORK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     private void setEditTextClickListener() {
-		addTaskText = (EditText) findViewById(R.id.editTextAddTask);
+		
 		addTaskText.setOnKeyListener(new OnKeyListener(){
 		    @Override
 			public boolean onKey(View v, int keyCode, KeyEvent event){
 		        if(keyCode == KeyEvent.KEYCODE_ENTER) {
 		        	addTaskNow(v);
+		        	return true;
 		        }
 		        return false;
 		    }
@@ -176,6 +179,7 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
 		
 		});
 	}
+    
 	protected void noTextEnteredToast() {
     	Toast.makeText(this, "Enter the task description, you beautiful creature", Toast.LENGTH_LONG).show();
 	}
