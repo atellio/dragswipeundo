@@ -30,6 +30,7 @@
         android:layout_gravity="center_vertical"
         android:background="?android:selectableItemBackground"
         android:focusable="false"
-        android:src="@drawable/ic_action_expand" />
+        android:src="@drawable/ic_action_expand"
+        android:contentDescription="@null" />
 
 </LinearLayout>

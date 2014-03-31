@@ -9,10 +9,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -68,6 +70,7 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
         
         setSwipeDismissAdapter();
         
+        setEditTextClickListener();
         
         // animation adapter applied to the listview sets the delay before the listview is 
         // populated via a cascading animation
@@ -158,8 +161,23 @@ public class MainActivity extends Activity implements OnDismissCallback, DeleteI
 			}
       }
 
+    // !!!!!!!!!!!!!!!!!!!!!!!!! BROKEN !!!!!!!!!!!!!!!!!!!!!!!!!! DOESN'T WORK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    private void setEditTextClickListener() {
+		addTaskText = (EditText) findViewById(R.id.editTextAddTask);
+		addTaskText.setOnKeyListener(new OnKeyListener(){
+		    @Override
+			public boolean onKey(View v, int keyCode, KeyEvent event){
+		        if(keyCode == KeyEvent.KEYCODE_ENTER) {
+		        	addTaskNow(v);
+		        }
+		        return false;
+		    }
+
+		
+		});
+	}
 	protected void noTextEnteredToast() {
-    	Toast.makeText(this, "enter the task description, you beautiful creature", Toast.LENGTH_LONG).show();
+    	Toast.makeText(this, "Enter the task description, you beautiful creature", Toast.LENGTH_LONG).show();
 	}
 
 	// return a MyListAdapter object with MainActivity.java as the context (this)

@@ -20,7 +20,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:hint="@string/add_task"
-            android:inputType="textShortMessage"
+            android:imeOptions="actionDone"
             android:paddingLeft="14dip"
             android:singleLine="true"
             android:textColor="@android:color/primary_text_light"
@@ -39,8 +39,9 @@
             android:layout_marginLeft="12.0dip"
             android:background="?android:selectableItemBackground"
             android:onClick="addTaskNow"
-            android:src="@drawable/ic_action_new" >
-        </ImageButton>
+            android:src="@drawable/ic_action_new"
+            android:contentDescription="@string/add_task_button_string" >      
+            </ImageButton>
     </LinearLayout>
 
     <com.nhaarman.listviewanimations.widget.DynamicListView
